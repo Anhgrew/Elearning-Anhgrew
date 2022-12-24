@@ -1,5 +1,5 @@
 #!/bin/bash
-DATABASE_PASS='admin123'
+DATABASE_PASS='anhgrew123'
 sudo yum update -y
 sudo yum install epel-release -y
 sudo yum install git zip unzip -y
@@ -10,7 +10,7 @@ sudo yum install mariadb-server -y
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 cd /tmp/
-git clone -b local-setup https://github.com/devopshydclub/vprofile-project.git
+git clone -b master https://github.com/Anhgrew/Elearning-Anhgrew.git
 #restore the dump file for the application
 sudo mysqladmin -u root password "$DATABASE_PASS"
 sudo mysql -u root -p"$DATABASE_PASS" -e "UPDATE mysql.user SET Password=PASSWORD('$DATABASE_PASS') WHERE User='root'"
@@ -18,10 +18,10 @@ sudo mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User='roo
 sudo mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User=''"
 sudo mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
 sudo mysql -u root -p"$DATABASE_PASS" -e "FLUSH PRIVILEGES"
-sudo mysql -u root -p"$DATABASE_PASS" -e "create database accounts"
-sudo mysql -u root -p"$DATABASE_PASS" -e "grant all privileges on accounts.* TO 'anhgrew'@'localhost' identified by 'admin123'"
-sudo mysql -u root -p"$DATABASE_PASS" -e "grant all privileges on accounts.* TO 'anhgrew'@'%' identified by 'admin123'"
-sudo mysql -u root -p"$DATABASE_PASS" accounts < /tmp/vprofile-project/src/main/resources/db_backup.sql
+sudo mysql -u root -p"$DATABASE_PASS" -e "create database elearning"
+sudo mysql -u root -p"$DATABASE_PASS" -e "grant all privileges on elearning.* TO 'anhgrew'@'localhost' identified by 'anhgrew123'"
+sudo mysql -u root -p"$DATABASE_PASS" -e "grant all privileges on elearning.* TO 'anhgrew'@'%' identified by 'anhgrew123'"
+sudo mysql -u root -p"$DATABASE_PASS" elearning < /tmp/Elearning-Anhgrew/src/main/resources/db_backup.sql
 sudo mysql -u root -p"$DATABASE_PASS" -e "FLUSH PRIVILEGES"
 
 # Restart mariadb-server

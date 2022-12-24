@@ -46,13 +46,13 @@ systemctl daemon-reload
 systemctl start tomcat
 systemctl enable tomcat
 
-git clone -b local-setup https://github.com/devopshydclub/vprofile-project.git
-cd vprofile-project
+git clone -b master https://github.com/Anhgrew/Elearning-Anhgrew.git
+cd Elearning-Anhgrew
 mvn install
 systemctl stop tomcat
 sleep 60
 rm -rf /usr/local/tomcat8/webapps/ROOT*
-cp target/vprofile-v2.war /usr/local/tomcat8/webapps/ROOT.war
+cp target/Elearning-0.0.1-SNAPSHOT.jar /usr/local/tomcat8/webapps/ROOT.jar
 systemctl start tomcat
 sleep 120
 cp /vagrant/application.properties /usr/local/tomcat8/webapps/ROOT/WEB-INF/classes/application.properties
