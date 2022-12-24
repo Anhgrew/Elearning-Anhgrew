@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+<head>
+<title>Danh sách khóa học</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row">
+			<div class="col-md-12 mb-2">
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"> <i
+								class="feather icon-home"></i> Trang chủ
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">Danh sách khóa
+								học</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				
+				<div class="card px-3">
+					<div class="card-header px-0 pb-2">
+						<h2 class="text-uppercase text-center">Danh sách khóa học</h2>
+						<a th:href="@{/admin/course/add}" class="btn btn-sm btn-primary">Thêm
+							mới</a>
+					</div>
+					<div class="card-block table-border-style">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Tiêu Đề</th>
+										<th>Tác giả</th>
+										<th>Hình Đại Diện</th>
+										<th>Số Bài Học</th>
+										<th>Giá Bán</th>
+										<th>Tên Danh Mục</th>
+										<th>Video Khoá</th>
+										<th>Mục Tiêu Khoá</th>
+										<th>Hành Động</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${courses.empty}">
+										<td colspan="6">Danh sách rỗng!</td>
+									</tr>
+									<tr th:each="item:${courses}">
+										<td th:text="${itemStat.index+1}">1</td>
+										<td th:text="${item.title}">Javascript</td>
+										<td th:text="${item.author}">Javascript</td>
+										<td><img th:src="@{/assets/images/1.png}" height="50"
+											class="p-1 border" /></td>
+										<td th:text="${item.leturesCount}">20</td>
+										<td th:text="${item.price}"
+											class="text-danger font-weight-bold">1.200.000 đ</td>
+										<td th:text="${item.category.title}">Javascript</td>
+										<td><a th:href="@{/admin/video/{id}(id=${item.id})}"
+											class="btn btn-sm btn-light btn-outline-dark btn-round py-1 font-weight-bold">
+												Danh Sách Video </a> <a
+											th:href="@{/admin/video/addToCourse/{id}(id=${item.id})}"
+											class="btn btn-sm btn-success btn-round py-1 font-weight-bold">
+												Thêm Video </a>
+										<td><a th:href="@{/admin/target/{id}(id=${item.id})}"
+											class="btn btn-sm btn-light btn-outline-dark btn-round py-1 font-weight-bold">
+												Danh Sách Mục Tiêu </a> <a
+											th:href="@{/admin/target/add/{id}(id=${item.id})}"
+											class="btn btn-sm btn-warning btn-round py-1 font-weight-bold">
+												Thêm Mục Tiêu </a></td>
+										<td><a
+											th:href="@{/admin/course/edit/{id}(id=${item.id})}"
+											class="btn btn-sm btn-info btn-round py-1 font-weight-bold">
+												Sửa </a> <a
+											th:href="@{/admin/course/delete/{id}(id=${item.id})}"
+											class="btn btn-sm btn-danger btn-round py-1 font-weight-bold">
+												Xóa </a></td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

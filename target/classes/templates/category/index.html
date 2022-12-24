@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+<head>
+<title>Danh sách danh mục</title>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row">
+			<div class="col-md-12 mb-2">
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"> <i
+								class="feather icon-home"></i> Trang chủ
+						</a></li>
+						<li class="breadcrumb-item"><a href="#!">Danh sách danh
+								mục</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="card px-3">
+					<div class="card-header px-0 pb-2">
+						<h2 class="text-uppercase text-center">Danh sách danh mục</h2>
+						<a th:href="@{/admin/category/add}" class="btn btn-sm btn-primary">Thêm
+							mới</a>
+					</div>
+					<div class="dropdown">
+						<a class="btn btn-outline-light dropdown-toggle"
+							data-toggle="dropdown"> <i class="text-dark fa fa-th"></i> <span
+							class="ml-2 text-dark">Categories</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li th:each="category : ${categories}"><a
+								class="dropdown-item"
+								th:href="@{/admin/category/{id}(id=${category.id})}"> <i
+									th:class="${category.icon}"></i> <span
+									th:text="${category.title}">Development</span>
+							</a></li>
+						</ul>
+					</div>
+					<div class="card-block table-border-style">
+						<div class="table-responsive">
+
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Tiêu Đề</th>
+										<th class="text-center">Icon</th>
+										<th class="text-center">Vị trí</th>
+										<th class="text-center">Hành Động</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${categories.empty}">
+										<td colspan="5">Danh sách rỗng!</td>
+									</tr>
+									<tr th:each="item : ${categories}">
+										<td th:text="${ itemStat.index + 1 }"></td>
+										<td th:text="${ item.title }"></td>
+										<td>
+											<h4 class="text-center">
+												<i th:class="${ item.icon }"></i>
+											</h4>
+										</td>
+										<td class="text-center" th:text="${ item.orderIndex }"></td>
+										<td class="text-center"><a
+											th:href="@{/admin/category/edit/{id}(id=${item.id})}"
+											class="btn btn-sm btn-info btn-round py-1 font-weight-bold">
+												Sửa </a> <a
+											th:href="@{/admin/category/delete/{id}(id=${item.id})}"
+											class="btn btn-sm btn-danger btn-round py-1 font-weight-bold">
+												Xóa </a></td>
+									</tr>
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

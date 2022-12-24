@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+<head>
+<title>Thêm mới mục tiêu</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row">
+			<div class="col-md-12 mb-2">
+				<div class="page-header-breadcrumb">
+					<ul class="breadcrumb-title">
+						<li class="breadcrumb-item"><a th:href="@{/admin}"> <i
+								class="feather icon-home"></i> Trang chủ
+						</a></li>
+						<li class="breadcrumb-item"><a th:href="@{/admin/target}">Mục
+								tiêu</a></li>
+						<li class="breadcrumb-item"><a href="#!">Cập nhật mục
+								tiêu</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<h2 class="text-uppercase text-center">Cập nhật mục tiêu</h2>
+					</div>
+					<div class="card-block">
+						<form th:action="@{/admin/target/edit}" th:object="${target}"
+							method="post">
+							<div class="row">
+								<div class="col-md-6 m-auto">
+									<input type="hidden" th:field="*{id}" class="form-control" />
+									<div class="form-group">
+										<label>Tiêu đề</label> <input type="text" th:field="*{title}"
+											class="form-control" />
+										<p class="text-danger" th:if="${#fields.hasErrors('title')}"
+											th:errors="*{title}"></p>
+									</div>
+									<div class="form-group">
+										<label>Vị trí</label> <input type="number"
+											th:field="*{orderIndex}" class="form-control" />
+										<p class="text-danger"
+											th:if="${#fields.hasErrors('orderIndex')}"
+											th:errors="*{orderIndex}"></p>
+									</div>
+									<div class="form-group">
+										<label>Khoá học</label> <select th:field="*{courseId}"
+											class="form-control">
+
+											<option th:each="course : ${courses}" th:value="${course.id}"
+												th:text="${course.title}"></option>
+
+										</select>
+
+										<p class="text-danger"
+											th:if="${#fields.hasErrors('courseId')}"
+											th:errors="*{courseId}"></p>
+									</div>
+									<div class="form-group mt-3">
+										<button type="submit" class="btn btn-primary m-b-0">Lưu
+											lại</button>
+										<a th:href="@{/admin/target}"
+											class="btn btn-secondary text-white">Quay lại</a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
