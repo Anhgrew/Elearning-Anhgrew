@@ -1,0 +1,180 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="navbar">
+	<a class="navbar-brand text-danger font-weight-bold"
+		th:href="@{/course}">E-Learning</a>
+	<button class="navbar-toggler d-lg-none" type="button"
+		data-toggle="collapse" data-target="#collapsibleNavId"
+		aria-controls="collapsibleNavId" aria-expanded="false"
+		aria-label="Toggle navigation"></button>
+	<div class="collapse navbar-collapse row" id="collapsibleNavId">
+		<div class="col-md-6">
+			<ul
+				class="navbar-nav mr-auto mt-2 mt-lg-0 d-flex align-items-center justify-content-between">
+				<li class="nav-item mr-3">
+
+					<div class="dropdown">
+						<a class="btn btn-outline-light dropdown-toggle"
+							data-toggle="dropdown"> <i class="fa fa-th"></i> <span
+							class="ml-2">Categories</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li th:each="category : ${categories}"><a
+								class="dropdown-item"
+								th:href="@{/course/search?categoryId={id}(id=${category.id})}">
+									<i th:class="${category.icon}"></i> <span
+									th:text="${category.title}">Development</span>
+							</a></li>
+						</ul>
+					</div>
+				</li>
+				<li class="nav-item w-100">
+					<form class="input-group mt-2 mb-2 nav-search" method="post"
+						th:action="${action!=null?action:'/course/search'}">
+						<input type="text" name="keyword" class="form-control"
+							placeholder="Search courses">
+						<div class="input-group-append">
+							<button class="btn bg-white text-danger">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</form>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="mt-2 mb-2 col-md-1 nav-cart">
+			<a th:if="${user == null}" data-toggle="modal"
+				data-target="#loginModal" class="btn btn-outline-success btn-md "
+				th:href="@{/user/mycourse}"> <i class="fa fa-shopping-cart"></i>
+				<span class="badge badge-dark"
+				th:text="${user != null ? enrolls : '' }"></span></a> <a
+				th:if="${(user!=null && user.role.name != 'ROLE_TEACHER')}"
+				class="btn btn-outline-success btn-md " th:href="@{/user/mycourse}">
+				<i class="fa fa-shopping-cart"></i> <span class="badge badge-dark"
+				th:text="${user != null ? enrolls : '' }"></span>
+
+			</a> <a th:if="${user != null && user.role.name == 'ROLE_TEACHER'}"
+				class="btn btn-outline-danger btn-md " th:href="@{/lecturer/upload}">
+				<i class="fa fa-plus-square"></i> <span class="badge badge-danger"
+				th:text="@{'UPLOAD COURSE' }"></span>
+
+			</a>
+		</div>
+
+		<div th:if="${user == null}" class="col-md-5 text-right">
+			<button class="btn btn-outline-secondary" data-toggle="modal"
+				data-target="#loginModal">Login</button>
+			<!-- 	<a class="btn btn-outline-danger ml-2" th:href="@{/registration}">Sign
+				up</a> -->
+		</div>
+
+		<div th:if="${user != null}"
+			class="col-md-5 d-flex justify-content-end">
+			<div class="dropdown">
+
+				<div class=" dropdown-toggle font-weight-bold text-dark"
+					data-toggle="dropdown">
+					<img width="63px" height="63px"
+						class="rounded-circle img-thumbnail"
+						th:src="${user.avatar == null ? 'https://i.udemycdn.com/user/200_H/anonymous_3.png' : user.avatar}"
+						th:alt="avatar">
+				</div>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item" th:href="@{/user/profile}">Profile</a> <a
+						class="dropdown-item"
+						th:href="${user.role.name == 'ROLE_TEACHER' ? '/lecturer':'/user/mycourse'}">My
+						course</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" th:href="@{/logout}">Logout</a>
+					<!-- /userId={id}(id=${}) -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- SIGN IN MODAL -->
+	<div class="modal" id="loginModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form class="md-float-material form-material"
+					th:action="@{/admin/login}" method="post">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Login</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+
+						<div class="form-group">
+							<label for="emailgEmaill">Email</label> <input type="email"
+								class="form-control" id="lgEmail" name="email">
+						</div>
+						<div class="form-group">
+							<label for="lgPassword">Password</label> <input type="password"
+								class="form-control" id="lgPassword" name="password">
+						</div>
+
+						<!-- <h6 class="text-danger text-center mb-5" th:text="${message}"></h6> -->
+
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+
+						<button type="submit" class="btn btn-primary">Login</button>
+						<a th:href="@{/registration}" class="btn btn-success">Create</a>
+						<a th:href="@{/forgot-password}" class="btn btn-secondary">Forget</a>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Exit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- SIGN UP MODAL -->
+	<!-- <div class="modal" id="signUpModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				Modal Header
+				<div class="modal-header">
+					<h4 class="modal-title">Sign up</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				Modal body
+				<div class="modal-body">
+					<form action="/registration" method="post">
+						<div class="form-group">
+							<label for="rgName">Name</label> <input name="fullName"
+								type="text" class="form-control" id="rgName">
+						</div>
+						<div class="form-group">
+							<label for="rgEmail">Email</label> <input type="email"
+								name="email" class="form-control" id="rgEmail">
+						</div>
+						<div class="form-group">
+							<label for="rgPassword">Password</label> <input name="password"
+								type="password" class="form-control" id="rgPassword">
+						</div>
+						<div class="form-group">
+							<label for="rgConfirm">Confirm</label> <input type="password"
+								name="comfirm" class="form-control" id="rgConfirm">
+						</div>
+					</form>
+				</div>
+
+				Modal footer
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Create</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Exit</button>
+				</div>
+
+			</div>
+		</div>
+	</div> -->
+</nav>
+
+

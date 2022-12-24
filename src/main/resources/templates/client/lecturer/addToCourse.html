@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/client/layout"
+	layout:decorator="client/layout/default">
+<head>
+<title>Thêm video cho khoá học</title>
+</head>
+<body>
+	<div layout:fragment="clientcontent">
+		<div class="row">
+
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<h2 class="text-uppercase text-center">Thêm mới video</h2>
+					</div>
+					<div class="card-block">
+						<form th:action="@{/lecturer/addVideo}" th:object="${video}"
+							method="post">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Tiêu đề</label> <input type="text" th:field="*{title}"
+											name="title" class="form-control" />
+										<p class="text-danger" th:if="${#fields.hasErrors('title')}"
+											th:errors="*{title}"></p>
+									</div>
+									<div class="form-group">
+										<label>Url</label> <input type="text" th:field="*{url}"
+											name="url" class="form-control" />
+										<p class="text-danger" th:if="${#fields.hasErrors('url')}"
+											th:errors="*{url}"></p>
+									</div>
+									<div class="form-group">
+										<label>Thời lượng (phút)</label> <input type="number"
+											name="timeCount" th:field="*{timeCount}" class="form-control" />
+										<p class="text-danger"
+											th:if="${#fields.hasErrors('timeCount')}"
+											th:errors="*{timeCount}"></p>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Vị trí</label> <input type="number"
+											th:field="*{orderIndex}" name="orderIndex"
+											class="form-control" />
+										<p class="text-danger"
+											th:if="${#fields.hasErrors('orderIndex')}"
+											th:errors="*{orderIndex}"></p>
+									</div>
+									<!-- <div class="form-group">
+										<label>Hình đại diện</label> <input type="text"
+											th:field="*{image}" name="image" class="form-control" />
+									</div> -->
+
+									<div class="form-group">
+										<label>Khoá học</label> <select th:field="*{courseId}"
+											class="form-control">
+
+											<option th:each="course : ${courses}" th:value="${course.id}"
+												th:text="${course.title}"></option>
+
+										</select>
+
+										<p class="text-danger"
+											th:if="${#fields.hasErrors('courseId')}"
+											th:errors="*{courseId}"></p>
+									</div>
+								</div>
+
+								<div class="col-12">
+									<div class="form-group mt-3">
+										<button type="submit" class="btn ml-2 btn-primary m-b-0">Save</button>
+										<a th:href="@{/lecturer/edit/{id}(id=${courses.id})}"
+											class="btn btn-secondary ml-1 text-white">Back</a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
