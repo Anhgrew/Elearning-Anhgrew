@@ -1,6 +1,8 @@
 TOMURL="https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz"
-yum install java-1.8.0-openjdk -y
-yum install git maven wget -y
+
+apt update && apt upgrade
+apt install openjdk-8-jdk -y
+apt install git maven wget -y
 cd /tmp/
 wget $TOMURL -O tomcatbin.tar.gz
 EXTOUT=`tar xzvf tomcatbin.tar.gz`
@@ -48,12 +50,14 @@ systemctl enable tomcat
 
 git clone -b master https://github.com/Anhgrew/Elearning-Anhgrew.git
 cd Elearning-Anhgrew
-mvn install
+./mvnw install
 systemctl stop tomcat
 sleep 60
 rm -rf /usr/local/tomcat8/webapps/ROOT*
-cp target/Elearning-0.0.1-SNAPSHOT.jar /usr/local/tomcat8/webapps/ROOT.jar
+cp /tmp/Elearning-Anhgrew/target/Elearning-0.0.1-SNAPSHOT.war /usr/local/tomcat8/webapps/ROOT.war
+chown -R tomcat.tomcat /usr/local/tomcat8
+
 systemctl start tomcat
 sleep 120
-cp /vagrant/application.properties /usr/local/tomcat8/webapps/ROOT/WEB-INF/classes/application.properties
+# cp /vagrant/application.properties /usr/local/tomcat8/webapps/ROOT/WEB-INF/classes/application.properties
 systemctl restart tomcat
