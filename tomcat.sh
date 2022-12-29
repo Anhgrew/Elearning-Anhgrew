@@ -21,8 +21,7 @@ After=network.target
 [Service]
 User=tomcat
 WorkingDirectory=/usr/local/tomcat8
-Environment=JRE_HOME=/usr/lib/jvm/jre
-Environment=JAVA_HOME=/usr/lib/jvm/jre
+
 Environment=CATALINA_HOME=/usr/local/tomcat8
 Environment=CATALINE_BASE=/usr/local/tomcat8
 ExecStart=/usr/local/tomcat8/bin/catalina.sh run
