@@ -43,10 +43,10 @@ cd Elearning-Anhgrew
 systemctl stop tomcat
 sleep 60
 rm -rf /usr/local/tomcat8/webapps/ROOT*
-cp /tmp/Elearning-Anhgrew/target/Elearning-0.0.1-SNAPSHOT.war /usr/local/tomcat8/webapps/ROOT.war
+cp /tmp/Elearning-Anhgrew/target/Elearning-0.0.1.war /usr/local/tomcat8/webapps/ROOT.war
 chown -R tomcat.tomcat /usr/local/tomcat8
 
 systemctl start tomcat
 sleep 120
 # cp /vagrant/application.properties /usr/local/tomcat8/webapps/ROOT/WEB-INF/classes/application.properties
-systemctl restart tomcat
+sudo systemctl restart tomcat
