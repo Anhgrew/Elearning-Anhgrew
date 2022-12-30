@@ -50,3 +50,6 @@ systemctl start tomcat
 sleep 120
 # cp /vagrant/application.properties /usr/local/tomcat8/webapps/ROOT/WEB-INF/classes/application.properties
 sudo systemctl restart tomcat
+
+
+echo "Done..."
