@@ -30,3 +30,5 @@ ln -s /etc/nginx/sites-available/elearning /etc/nginx/sites-enabled/elearning
 systemctl start nginx
 systemctl enable nginx
 systemctl restart nginx
+
+echo "Done..."
